@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Add a default marker</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
+<style>
+  #body { 
+    margin: 0; padding: 0; }
+  #map { 
+    position: absolute; top: 0; bottom: 0; width: 100%; }
+
+.map-overlay {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+}</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div class="map-overlay top">
+  <button style="font-size: 2em" onclick="move()">
+    Show bus stops in Bullhead City Arizona
+  </button>
+</div>
+ 
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiYmxhaXJsYWlyZDg1IiwiYSI6ImNscHFldTRtajB4ZGgyam10M25mcDloOWMifQ.6RdQZSc2k7b0poCymn8TwA';
+
+  var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-114.640687, 35.103813],
+      zoom: 14
+  });
+ 
+var marker = new mapboxgl.Marker()
+    .setLngLat([-114.640687, 35.103813])
+    .addTo(map);
+
+const busStops = [
+    [-114.640687, 35.103813], 
+    [-114.639313, 35.098937],
+    [-114.635063, 35.107937]
+];
+
+let counter = 0;
+function move(){
+  setTimeout(()=>{
+    if (counter >= busStops.length) return;
+    marker.setLngLat(busStops[counter]);
+    counter++;
+    move();
+  },1000); 
+}
+
+</script>
+ 
+</body>
+</html>
